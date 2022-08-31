@@ -59,8 +59,6 @@ func main() {
 }
 
 func proxyPass(res http.ResponseWriter, req *http.Request) {
-	// Encrypt Request here
-	// ...
 
 	url, _ := url.Parse("127.0.01:9000")
 	proxy := httputil.NewSingleHostReverseProxy(url)
