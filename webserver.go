@@ -16,18 +16,22 @@ import (
 func main() {
 
 	var port int
+	var directory string
 
 	flag.IntVar(&port, "p", 8000, "Specify the port. Default is 8000")
+	flag.StringVar(&directory, "d", "", "Specify the sub directory to ./html where the index.html is located")
 	flag.Parse()
 
-	fileServer := http.FileServer(http.Dir("./html"))
+	indexPath := "./html/" + directory + "/"
 
-	//http.Handle("/", fileServer)
+	fileServer := http.FileServer(http.Dir(indexPath))
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		//If the requested file exists then return if; otherwise return index.html (fileserver default page)
 		if r.URL.Path != "/" {
-			fullPath := "./html/" + strings.TrimPrefix(path.Clean(r.URL.Path), "/")
+			fullPath := indexPath + strings.TrimPrefix(path.Clean(r.URL.Path), "/")
 			_, err := os.Stat(fullPath)
+			//overides the error by changing the path
 			if err != nil {
 				if !os.IsNotExist(err) {
 					panic(err)
