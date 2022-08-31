@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.56cbb69f.css",
+    "main.js": "/static/js/main.f9878206.js",
+    "static/js/787.a5fa54f9.chunk.js": "/static/js/787.a5fa54f9.chunk.js",
+    "static/media/graduation-pic.png": "/static/media/graduation-pic.ce729580823aa0a7ff22.png",
+    "static/media/disney-pic.png": "/static/media/disney-pic.9b7f3e3df11fe6f8e494.png",
+    "static/media/bab-pic.png": "/static/media/bab-pic.ceffb2f79c3c7599faca.png",
+    "static/media/profile_pic.png": "/static/media/profile_pic.60a424a4ce94f0a8468a.png",
+    "index.html": "/index.html",
+    "main.56cbb69f.css.map": "/static/css/main.56cbb69f.css.map",
+    "main.f9878206.js.map": "/static/js/main.f9878206.js.map",
+    "787.a5fa54f9.chunk.js.map": "/static/js/787.a5fa54f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.56cbb69f.css",
+    "static/js/main.f9878206.js"
+  ]
+}
