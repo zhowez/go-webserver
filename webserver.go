@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"os"
 	"path"
 	"strconv"
@@ -52,5 +54,15 @@ func main() {
 	if err := http.ListenAndServe(portString, nil); err != nil {
 		log.Fatal(err)
 	}
+	http.HandleFunc("/api", proxyPass)
 
+}
+
+func proxyPass(res http.ResponseWriter, req *http.Request) {
+	// Encrypt Request here
+	// ...
+
+	url, _ := url.Parse("127.0.01:9000")
+	proxy := httputil.NewSingleHostReverseProxy(url)
+	proxy.ServeHTTP(res, req)
 }
