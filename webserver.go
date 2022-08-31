@@ -5,8 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"path"
 	"strconv"
+	"strings"
 )
+
+//const FSPATH = "./html/"
 
 func main() {
 
@@ -17,7 +22,24 @@ func main() {
 
 	fileServer := http.FileServer(http.Dir("./html"))
 
-	http.Handle("/", fileServer)
+	//http.Handle("/", fileServer)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		//If the requested file exists then return if; otherwise return index.html (fileserver default page)
+		if r.URL.Path != "/" {
+			fullPath := "./html/" + strings.TrimPrefix(path.Clean(r.URL.Path), "/")
+			_, err := os.Stat(fullPath)
+			if err != nil {
+				if !os.IsNotExist(err) {
+					panic(err)
+				}
+				// Requested file does not exist so we return the default (resolves to index.html)
+				r.URL.Path = "/"
+			}
+
+		}
+
+		fileServer.ServeHTTP(w, r)
+	})
 
 	fmt.Println("Webserver is now starting on port ", port)
 
