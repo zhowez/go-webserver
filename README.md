@@ -13,9 +13,9 @@ It will forward any /api/ request through the reverse proxy.
 - d : specifies the sub-directory location of the index.* in /html
 
 ## Files 
-webserver.go - the webserver
-/html - the folder that holds all static file
+- webserver.go - the webserver
+- /html - the folder that holds all static file
     - A react app with client side routeing for testing
     -  /test - a sub-directory to test the "-d" flag
-      - index.html a test html page
+       -  index.html a test html page
 
