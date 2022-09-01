@@ -19,3 +19,7 @@ It will forward any /api/ request through the reverse proxy.
     -  /test - a sub-directory to test the "-d" flag
        -  index.html a test html page
 
+
+## Testing
+If you would like to test the webserver you can use the included react app and my test api [here](https://github.com/zhowez/testAPi)
+
