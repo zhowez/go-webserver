@@ -13,8 +13,7 @@ import (
 	"strings"
 )
 
-func staticHandler(w http.ResponseWriter, r *http.Request, directory string, port int) {
-	fmt.Println("home")
+func staticHandler(w http.ResponseWriter, r *http.Request, directory string) {
 	indexPath := "./html/" + directory + "/"
 
 	fileServer := http.FileServer(http.Dir(indexPath))
@@ -38,8 +37,6 @@ func staticHandler(w http.ResponseWriter, r *http.Request, directory string, por
 
 func apiHandler(w http.ResponseWriter, r *http.Request, port int) {
 	fmt.Println("api")
-	fmt.Println("reached proxy section")
-	fmt.Println(r.URL)
 	proxyUrl := "http://127.0.0.1:" + strconv.Itoa(port)
 	fmt.Println(proxyUrl)
 	url, _ := url.Parse(proxyUrl)
@@ -62,7 +59,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		staticHandler(w, r, directory, port)
+		staticHandler(w, r, directory)
 
 	})
 	mux.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
@@ -77,61 +74,3 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(portString, mux))
 }
-
-// import (
-// 	"flag"
-// 	"fmt"
-// 	"log"
-// 	"net/http"
-// 	"net/http/httputil"
-// 	"net/url"
-// 	// "os"
-// 	// "path"
-// 	"strconv"
-// 	// "strings"
-// )
-
-// func main() {
-
-// 	http.HandleFunc("/api", func(res http.ResponseWriter, req *http.Request) {
-// 		fmt.Println("reached proxy section")
-// 		proxyUrl := "http://127.0.0.1:" + strconv.Itoa(proxyPort) + req.URL.RawPath
-// 		fmt.Println(proxyUrl)
-// 		url, _ := url.Parse(proxyUrl)
-// 		proxy := httputil.NewSingleHostReverseProxy(url)
-// 		proxy.ServeHTTP(res, req)
-// 	})
-
-// 	// indexPath := "./html/" + directory + "/"
-
-// 	// fileServer := http.FileServer(http.Dir(indexPath))
-
-// 	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-// 	// 	//If the requested file exists then return if; otherwise return index.html (fileserver default page)
-// 	// 	if r.URL.Path != "/" {
-// 	// 		fullPath := indexPath + strings.TrimPrefix(path.Clean(r.URL.Path), "/")
-// 	// 		_, err := os.Stat(fullPath)
-// 	// 		//overides the error by changing the path
-// 	// 		if err != nil {
-// 	// 			if !os.IsNotExist(err) {
-// 	// 				panic(err)
-// 	// 			}
-// 	// 			// Requested file does not exist so we return the default (resolves to index.html)
-// 	// 			r.URL.Path = "/"
-// 	// 		}
-
-// 	// 	}
-
-// 	// 	fileServer.ServeHTTP(w, r)
-// 	// })
-
-// 	fmt.Println("Webserver is now starting on port ", port)
-// 	fmt.Println("The api is running on ", proxyPort)
-
-// 	var portString string = ":" + strconv.Itoa(port)
-
-// 	if err := http.ListenAndServe(portString, nil); err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// }
